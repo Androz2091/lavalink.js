@@ -1,0 +1,10 @@
+{
+  "name": "lavalink.js",
+  "version": "1.0.0",
+  "description": "A Lavalink wrapper for Discord bots using Discord.js or Eris ",
+  "main": "index.js",
+  "repository": "https://github.com/Ernest05/lavalink.js.git",
+  "author": "Ernest05",
+  "license": "MIT",
+  "private": false
+}
