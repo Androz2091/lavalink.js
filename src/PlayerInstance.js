@@ -179,7 +179,7 @@ module.exports = class PlayerInstance extends Collection {
         });
 
         player.removeAllListeners();
-        player.destroy();
+        player.disconnect();
 
         return this.delete(guildID);
     }
