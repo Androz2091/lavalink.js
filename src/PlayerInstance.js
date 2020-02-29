@@ -179,7 +179,7 @@ module.exports = class PlayerInstance extends Collection {
         });
 
         player.removeAllListeners();
-        player.disconnect();
+        player.destroy();
 
         return this.delete(guildID);
     }
@@ -193,10 +193,10 @@ module.exports = class PlayerInstance extends Collection {
      * @returns {Player} The returned guild player
      */
     returnPlayer (options) {
-        let player = this.get(options.guildID);
+        const isPlayer = this.get(options.guildID);
 
-        if (player) {
-            return player;
+        if (isPlayer) {
+            return isPlayer;
         } else {
             const server = this.serversStorage.get(options.host);
 
@@ -204,7 +204,7 @@ module.exports = class PlayerInstance extends Collection {
                 throw new Error(`No Lavalink server found at host ${options.host}. Please provide a valid host.`);
             }
 
-            player = new this.Player({
+            const player = new this.Player({
                 client: this.client,
                 playerInstance: this,
                 server,
