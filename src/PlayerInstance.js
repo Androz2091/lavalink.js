@@ -161,12 +161,6 @@ module.exports = class PlayerInstance extends Collection {
         if (!guildID) {
             throw new Error('Please provide a valid guild ID to leave a voice channel!');
         }
-
-        const player = this.get(guildID);
-
-        if (!player) {
-            return false;
-        }
         
         this.sendWS({
             op: 4,
@@ -177,6 +171,12 @@ module.exports = class PlayerInstance extends Collection {
                 self_deaf: false
             }
         });
+
+        const player = this.get(guildID);
+
+        if (!player) {
+            return false;
+        }
 
         player.removeAllListeners();
         player.destroy();
@@ -193,10 +193,10 @@ module.exports = class PlayerInstance extends Collection {
      * @returns {Player} The returned guild player
      */
     returnPlayer (options) {
-        const isPlayer = this.get(options.guildID);
+        let player = this.get(options.guildID);
 
-        if (isPlayer) {
-            return isPlayer;
+        if (player) {
+            return player;
         } else {
             const server = this.serversStorage.get(options.host);
 
@@ -204,7 +204,7 @@ module.exports = class PlayerInstance extends Collection {
                 throw new Error(`No Lavalink server found at host ${options.host}. Please provide a valid host.`);
             }
 
-            const player = new this.Player({
+            player = new this.Player({
                 client: this.client,
                 playerInstance: this,
                 server,
