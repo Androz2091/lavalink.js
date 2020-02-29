@@ -157,7 +157,7 @@ module.exports = class PlayerInstance extends Collection {
      * @param {string} guildID The ID of the Discord guild
      * @returns {boolean} The leaved voice channel
      */
-    leave (guildID) {
+    async leave (guildID) {
         if (!guildID) {
             throw new Error('Please provide a valid guild ID to leave a voice channel!');
         }
@@ -179,7 +179,8 @@ module.exports = class PlayerInstance extends Collection {
         }
 
         player.removeAllListeners();
-        player.destroy();
+        await player.stop();
+        await player.destroy();
 
         return this.delete(guildID);
     }
